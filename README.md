@@ -1,1 +1,1215 @@
 # ever-homes-park-view-city
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#10233f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Ever Homes AI Assistant</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "SF Pro Text", "Segoe UI", Arial, sans-serif;
+  background: #f4f6f8;
+  color: #172033;
+}
+
+:root {
+  --navy: #10233f;
+  --navy2: #17375f;
+  --gold: #c79b45;
+  --gold-light: #ead39c;
+  --green: #20a36a;
+  --white: #ffffff;
+  --gray: #6c7685;
+  --light: #f5f7fa;
+  --border: #e4e8ee;
+}
+
+/* APP */
+
+.app {
+  width: 100%;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+/* HEADER */
+
+.header {
+  flex-shrink: 0;
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-left: 17px;
+  padding-right: 17px;
+  padding-bottom: 12px;
+  background: var(--navy);
+  color: white;
+}
+
+.header-inner {
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: linear-gradient(145deg, #d8b66c, #b68735);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 15px;
+  letter-spacing: -1px;
+}
+
+.brand-title {
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.brand-sub {
+  color: #cbd8e8;
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #bdebd5;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #39d98a;
+  box-shadow: 0 0 0 4px rgba(57,217,138,.12);
+}
+
+/* CHAT */
+
+.chat {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 18px 14px 14px;
+  background:
+    radial-gradient(circle at top right, rgba(199,155,69,.08), transparent 35%),
+    #f7f8fa;
+}
+
+.welcome {
+  text-align: center;
+  padding: 7px 12px 17px;
+}
+
+.welcome-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 10px;
+  border-radius: 18px;
+  background: var(--navy);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 900;
+  box-shadow: 0 8px 24px rgba(16,35,63,.15);
+}
+
+.welcome h1 {
+  font-size: 20px;
+  margin: 0 0 5px;
+}
+
+.welcome p {
+  color: var(--gray);
+  font-size: 12px;
+  margin: 0;
+}
+
+/* MESSAGES */
+
+.message-row {
+  display: flex;
+  margin: 9px 0;
+}
+
+.message-row.user {
+  justify-content: flex-end;
+}
+
+.message {
+  max-width: 84%;
+  padding: 12px 14px;
+  border-radius: 17px;
+  font-size: 13px;
+  line-height: 1.48;
+  word-wrap: break-word;
+}
+
+.message.bot {
+  background: white;
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 5px;
+  box-shadow: 0 2px 7px rgba(0,0,0,.025);
+}
+
+.message.user {
+  background: var(--navy);
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+/* QUICK BUTTONS */
+
+.quick-title {
+  font-size: 10px;
+  color: var(--gray);
+  margin: 14px 2px 7px;
+}
+
+.quick-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.quick-btn {
+  appearance: none;
+  border: 1px solid #d9e0e8;
+  background: white;
+  color: var(--navy);
+  padding: 10px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 650;
+  cursor: pointer;
+  min-height: 39px;
+}
+
+.quick-btn:active {
+  transform: scale(.97);
+  background: #edf2f7;
+}
+
+/* TYPING */
+
+.typing {
+  display: none;
+  width: fit-content;
+  padding: 11px 14px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin: 8px 0;
+}
+
+.typing span {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #8993a1;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: bounce 1s infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: .15s;
+}
+
+.typing span:nth-child(3) {
+  animation-delay: .3s;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
+}
+
+/* INPUT */
+
+.input-area {
+  flex-shrink: 0;
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 9px 10px;
+  padding-bottom: max(9px, env(safe-area-inset-bottom));
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #f1f3f6;
+  border: 1px solid #e2e6eb;
+  border-radius: 16px;
+  padding: 5px;
+}
+
+.input-box input {
+  min-width: 0;
+  flex: 1;
+  height: 42px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  padding: 0 10px;
+  font-size: 15px;
+  color: #172033;
+}
+
+.input-box input::placeholder {
+  color: #929aa7;
+}
+
+.send {
+  flex-shrink: 0;
+  width: 43px;
+  height: 43px;
+  border: 0;
+  border-radius: 13px;
+  background: var(--gold);
+  color: white;
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.send:active {
+  transform: scale(.94);
+}
+
+/* LEAD MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgba(8,20,35,.55);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: none;
+  align-items: flex-end;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-card {
+  width: 100%;
+  background: white;
+  border-radius: 24px 24px 0 0;
+  padding: 22px 17px;
+  padding-bottom: max(22px, env(safe-area-inset-bottom));
+  box-shadow: 0 -15px 40px rgba(0,0,0,.18);
+}
+
+.handle {
+  width: 38px;
+  height: 4px;
+  border-radius: 10px;
+  background: #d8dde4;
+  margin: -4px auto 18px;
+}
+
+.modal-card h2 {
+  font-size: 20px;
+  margin: 0 0 5px;
+}
+
+.modal-card p {
+  font-size: 12px;
+  color: var(--gray);
+  margin: 0 0 17px;
+  line-height: 1.45;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #dce2e9;
+  border-radius: 12px;
+  padding: 0 13px;
+  margin-bottom: 9px;
+  font-size: 14px;
+  background: white;
+  outline: none;
+}
+
+.primary {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--navy);
+  color: white;
+  font-weight: 750;
+  font-size: 14px;
+}
+
+.cancel {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--gray);
+  padding: 12px;
+  font-size: 12px;
+}
+
+/* TABLET / DESKTOP */
+
+@media (min-width: 700px) {
+
+  body {
+    overflow: auto;
+  }
+
+  .app {
+    max-width: 1100px;
+    height: 90vh;
+    min-height: 650px;
+    margin: 5vh auto;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 70px rgba(16,35,63,.15);
+  }
+
+  .chat {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .message {
+    max-width: 65%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+
+      <div class="brand">
+        <div class="logo">EH</div>
+
+        <div>
+          <div class="brand-title">
+            Ever Homes AI Assistant
+          </div>
+
+          <div class="brand-sub">
+            Park View City Lahore
+          </div>
+        </div>
+      </div>
+
+      <div class="status">
+        <span class="dot"></span>
+        ONLINE
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- CHAT -->
+  <main class="chat" id="chat">
+
+    <div class="welcome">
+
+      <div class="welcome-icon">
+        AI
+      </div>
+
+      <h1>Welcome to Ever Homes</h1>
+
+      <p>
+        Your AI property sales assistant
+      </p>
+
+    </div>
+
+
+    <div id="messages">
+
+      <div class="message-row">
+        <div class="message bot">
+          Assalam-o-Alaikum! 👋<br><br>
+
+          I'm the Ever Homes AI property assistant.
+          I can help you explore properties in
+          <b>Park View City Lahore</b>, answer common
+          questions and arrange a site visit.
+          <br><br>
+          How can I help you today?
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="quick-title">
+      Popular questions
+    </div>
+
+    <div class="quick-buttons" id="quickButtons">
+
+      <button class="quick-btn"
+              onclick="quickMessage('I want to buy a plot')">
+        🏡 Buy a Plot
+      </button>
+
+      <button class="quick-btn"
+              onclick="quickMessage('What property sizes are available?')">
+        📐 Property Sizes
+      </button>
+
+      <button class="quick-btn"
+              onclick="quickMessage('Tell me about payment plans')">
+        📑 Payment Plans
+      </button>
+
+      <button class="quick-btn"
+              onclick="openLeadForm()">
+        🚗 Book Site Visit
+      </button>
+
+    </div>
+
+
+    <div class="typing" id="typing">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </main>
+
+
+  <!-- INPUT -->
+  <div class="input-area">
+
+    <div class="input-box">
+
+      <input
+        id="userInput"
+        type="text"
+        enterkeyhint="send"
+        autocomplete="off"
+        autocorrect="on"
+        placeholder="Ask about properties..."
+      >
+
+      <button class="send" onclick="sendMessage()">
+        ↑
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- LEAD FORM -->
+
+<div class="modal" id="leadModal">
+
+  <div class="modal-card">
+
+    <div class="handle"></div>
+
+    <h2>Book a Site Visit 🚗</h2>
+
+    <p>
+      Leave your details and the Ever Homes sales
+      team can follow up with you.
+    </p>
+
+    <input
+      id="leadName"
+      class="form-input"
+      type="text"
+      placeholder="Your name"
+      autocomplete="name"
+    >
+
+    <input
+      id="leadPhone"
+      class="form-input"
+      type="tel"
+      inputmode="tel"
+      placeholder="Phone number"
+      autocomplete="tel"
+    >
+
+    <select id="leadProperty" class="form-select">
+
+      <option value="">
+        Preferred property
+      </option>
+
+      <option>
+        5 Marla
+      </option>
+
+      <option>
+        10 Marla
+      </option>
+
+      <option>
+        1 Kanal
+      </option>
+
+      <option>
+        House
+      </option>
+
+    </select>
+
+    <select id="leadDay" class="form-select">
+
+      <option value="">
+        Preferred visit day
+      </option>
+
+      <option>
+        Friday
+      </option>
+
+      <option>
+        Saturday
+      </option>
+
+      <option>
+        Sunday
+      </option>
+
+    </select>
+
+    <button class="primary" onclick="submitLead()">
+      Submit Request
+    </button>
+
+    <button class="cancel" onclick="closeLeadForm()">
+      Cancel
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   CHAT ENGINE
+========================= */
+
+const chat = document.getElementById("chat");
+const messages = document.getElementById("messages");
+const input = document.getElementById("userInput");
+const typing = document.getElementById("typing");
+
+
+function addMessage(text, type) {
+
+  const row = document.createElement("div");
+
+  row.className =
+    "message-row " +
+    (type === "user" ? "user" : "");
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "message " +
+    (type === "user" ? "user" : "bot");
+
+  bubble.innerHTML = text;
+
+  row.appendChild(bubble);
+
+  messages.appendChild(row);
+
+  scrollBottom();
+}
+
+
+function scrollBottom() {
+
+  setTimeout(() => {
+
+    chat.scrollTo({
+      top: chat.scrollHeight,
+      behavior: "smooth"
+    });
+
+  }, 50);
+
+}
+
+
+/* =========================
+   BOT RESPONSES
+========================= */
+
+function getBotResponse(message) {
+
+  const text =
+    message.toLowerCase();
+
+
+  /* PLOT */
+
+  if (
+    text.includes("plot") ||
+    text.includes("land")
+  ) {
+
+    return {
+      text:
+        "Absolutely. 🏡<br><br>" +
+
+        "I can help you explore plot options " +
+        "based on your preferred size, budget " +
+        "and location within the project." +
+
+        "<br><br>" +
+
+        "Which size are you considering?",
+
+      buttons: [
+        "5 Marla",
+        "10 Marla",
+        "1 Kanal"
+      ]
+    };
+
+  }
+
+
+  /* SIZE */
+
+  if (
+    text.includes("size") ||
+    text.includes("5 marla") ||
+    text.includes("10 marla") ||
+    text.includes("1 kanal")
+  ) {
+
+    return {
+      text:
+        "We can configure the AI to show " +
+        "Ever Homes' latest approved inventory " +
+        "by property size. 📐<br><br>" +
+
+        "In the live version, customers would " +
+        "see current availability and approved " +
+        "pricing rather than outdated information.",
+
+      buttons: [
+        "Tell me about prices",
+        "Payment plans",
+        "Book a site visit"
+      ]
+    };
+
+  }
+
+
+  /* PRICE */
+
+  if (
+    text.includes("price") ||
+    text.includes("cost") ||
+    text.includes("rate")
+  ) {
+
+    return {
+      text:
+        "💰 The production AI can be connected " +
+        "to Ever Homes' approved sales data so " +
+        "customers receive the latest prices " +
+        "and availability automatically.<br><br>" +
+
+        "This demonstration intentionally does " +
+        "not display unverified prices.",
+
+      buttons: [
+        "Payment plans",
+        "Book a site visit"
+      ]
+    };
+
+  }
+
+
+  /* PAYMENT */
+
+  if (
+    text.includes("payment") ||
+    text.includes("installment") ||
+    text.includes("installment")
+  ) {
+
+    return {
+      text:
+        "📑 I can explain the latest approved " +
+        "payment plans, including installment " +
+        "structure and booking requirements.<br><br>" +
+
+        "In production, this information can " +
+        "be connected directly to Ever Homes' " +
+        "current sales database.",
+
+      buttons: [
+        "5 Marla options",
+        "10 Marla options",
+        "Book a site visit"
+      ]
+    };
+
+  }
+
+
+  /* HOUSE */
+
+  if (
+    text.includes("house") ||
+    text.includes("home")
+  ) {
+
+    return {
+      text:
+        "🏠 Looking for a home instead of a plot?<br><br>" +
+
+        "The AI can qualify your requirements " +
+        "such as budget, size and preferred " +
+        "location, then recommend suitable " +
+        "options and pass the lead to your " +
+        "sales team.",
+
+      buttons: [
+        "Tell me about prices",
+        "Book a site visit"
+      ]
+    };
+
+  }
+
+
+  /* VISIT */
+
+  if (
+    text.includes("visit") ||
+    text.includes("location") ||
+    text.includes("see")
+  ) {
+
+    return {
+      text:
+        "I'd be happy to arrange a site-visit " +
+        "request. 🚗<br><br>" +
+
+        "I'll just need your name, phone number " +
+        "and preferred visit day.",
+
+      buttons: [
+        "Book my site visit"
+      ]
+    };
+
+  }
+
+
+  /* GREETING */
+
+  if (
+    text.includes("hi") ||
+    text.includes("hello") ||
+    text.includes("salam") ||
+    text.includes("assalam")
+  ) {
+
+    return {
+      text:
+        "Wa Alaikum Assalam! 👋<br><br>" +
+
+        "Welcome to Ever Homes. " +
+        "How can I help you find your ideal " +
+        "property in Park View City Lahore?",
+
+      buttons: [
+        "Buy a plot",
+        "Buy a house",
+        "Book a site visit"
+      ]
+    };
+
+  }
+
+
+  /* DEFAULT */
+
+  return {
+    text:
+      "I can help you with:<br><br>" +
+
+      "🏡 Property options<br>" +
+      "💰 Pricing enquiries<br>" +
+      "📑 Payment plans<br>" +
+      "📐 Property sizes<br>" +
+      "🚗 Site visits<br>" +
+      "📞 Sales enquiries<br><br>" +
+
+      "What would you like to explore?",
+
+    buttons: [
+      "Buy a plot",
+      "Payment plans",
+      "Book a site visit"
+    ]
+  };
+
+}
+
+
+/* =========================
+   SEND
+========================= */
+
+function sendMessage() {
+
+  const text =
+    input.value.trim();
+
+  if (!text) return;
+
+  addMessage(
+    escapeHTML(text),
+    "user"
+  );
+
+  input.value = "";
+
+  typing.style.display =
+    "block";
+
+  scrollBottom();
+
+
+  setTimeout(() => {
+
+    typing.style.display =
+      "none";
+
+    const response =
+      getBotResponse(text);
+
+    addMessage(
+      response.text,
+      "bot"
+    );
+
+    showQuickButtons(
+      response.buttons
+    );
+
+  }, 550);
+
+}
+
+
+/* =========================
+   QUICK MESSAGE
+========================= */
+
+function quickMessage(text) {
+
+  if (
+    text.toLowerCase()
+      .includes("book")
+  ) {
+
+    openLeadForm();
+    return;
+
+  }
+
+  input.value = text;
+
+  sendMessage();
+
+}
+
+
+/* =========================
+   QUICK BUTTONS
+========================= */
+
+function showQuickButtons(buttons) {
+
+  const old =
+    document.querySelector(
+      ".dynamic-buttons"
+    );
+
+  if (old) old.remove();
+
+
+  const container =
+    document.createElement("div");
+
+  container.className =
+    "quick-buttons dynamic-buttons";
+
+
+  buttons.forEach(buttonText => {
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "quick-btn";
+
+    button.textContent =
+      buttonText;
+
+    button.onclick =
+      function() {
+
+        if (
+          buttonText
+            .toLowerCase()
+            .includes("book")
+        ) {
+
+          openLeadForm();
+
+        } else {
+
+          quickMessage(buttonText);
+
+        }
+
+      };
+
+    container.appendChild(button);
+
+  });
+
+
+  messages.appendChild(container);
+
+  scrollBottom();
+
+}
+
+
+/* =========================
+   LEAD FORM
+========================= */
+
+function openLeadForm() {
+
+  document
+    .getElementById("leadModal")
+    .classList.add("show");
+
+}
+
+
+function closeLeadForm() {
+
+  document
+    .getElementById("leadModal")
+    .classList.remove("show");
+
+}
+
+
+function submitLead() {
+
+  const name =
+    document
+      .getElementById("leadName")
+      .value.trim();
+
+  const phone =
+    document
+      .getElementById("leadPhone")
+      .value.trim();
+
+
+  if (!name || !phone) {
+
+    alert(
+      "Please enter your name and phone number."
+    );
+
+    return;
+
+  }
+
+
+  closeLeadForm();
+
+
+  addMessage(
+    "I'd like to book a site visit.",
+    "user"
+  );
+
+
+  setTimeout(() => {
+
+    addMessage(
+      "Thank you, <b>" +
+      escapeHTML(name) +
+      "</b>! ✅<br><br>" +
+
+      "Your site-visit request has been " +
+      "captured in this demo. A sales " +
+      "representative can follow up with you " +
+      "regarding your preferred property.",
+
+      "bot"
+    );
+
+    showQuickButtons([
+      "Tell me about payment plans",
+      "Explore property sizes"
+    ]);
+
+  }, 500);
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+
+}
+
+
+/* =========================
+   IOS KEYBOARD FRIENDLY
+========================= */
+
+input.addEventListener(
+  "focus",
+  function() {
+
+    setTimeout(
+      scrollBottom,
+      300
+    );
+
+  }
+);
+
+
+/* SEND WITH ENTER */
+
+input.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Enter"
+    ) {
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
+
+  }
+);
+
+
+/* CLOSE MODAL ON BACKDROP */
+
+document
+  .getElementById("leadModal")
+  .addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target === this
+      ) {
+
+        closeLeadForm();
+
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
